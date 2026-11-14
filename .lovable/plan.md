@@ -8,7 +8,7 @@ Adicionar a animação sliding login/signup nas telas `/login` e `/signup`, mant
 
 **Adaptações ao snippet original:**
 
-1. **Design tokens em vez de cores hard-coded.** Substituir `#7494ec`, `#fff`, `#eee`, `#333`, `#888`, `#ccc` por tokens semânticos do `src/styles.css` (`--primary`, `--background`, `--muted`, `--foreground`, `--muted-foreground`, `--border`). A animação sliding fica intacta; só a paleta muda para combinar com o DS Viver de IA.
+1. **Design tokens em vez de cores hard-coded.** Substituir `#7494ec`, `#fff`, `#eee`, `#333`, `#888`, `#ccc` por tokens semânticos do `src/styles.css` (`--primary`, `--background`, `--muted`, `--foreground`, `--muted-foreground`, `--border`). A animação sliding fica intacta; só a paleta muda para combinar com o design system do app.
 2. **Ícones Lucide reais.** O snippet usa `<i>` placeholders; trocar por `<User />`, `<Mail />`, `<Lock />` de `lucide-react` posicionados absolutamente dentro de cada `.input-box`.
 3. **Sem fonte Poppins.** Remover o `@import` de Google Fonts e a regra `font-family: "Poppins"`. Usar a fonte do projeto (Inter já configurada).
 4. **Sem ícones sociais funcionais.** O projeto não tem OAuth implementado. Remover a seção `social-icons` e o texto "or login with social platforms" — não vamos adicionar UI que não funciona.
