@@ -145,7 +145,8 @@ function AdminOverview() {
     onError: (e: Error) => toast.error(e.message),
   });
 
-  if (loading || adminLoading) return <p className="text-sm text-muted-foreground">Carregando...</p>;
+  if (loading || adminLoading)
+    return <p className="text-sm text-muted-foreground">Carregando...</p>;
   if (!user) return <Navigate to="/login" />;
   if (!isAdmin)
     return (

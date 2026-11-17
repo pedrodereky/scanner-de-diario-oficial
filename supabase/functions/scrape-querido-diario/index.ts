@@ -89,7 +89,8 @@ Deno.serve(async (req) => {
 
     return jsonResponse({ source_code, inserted: insertedIds.length, found: gazettes.length });
   } catch (e) {
-    const msg = e instanceof Error ? e.message : ((e as { message?: string })?.message ?? JSON.stringify(e));
+    const msg =
+      e instanceof Error ? e.message : ((e as { message?: string })?.message ?? JSON.stringify(e));
     await markRun(supa, source_id, date, "failed", msg);
     return jsonResponse({ error: msg }, 500);
   }

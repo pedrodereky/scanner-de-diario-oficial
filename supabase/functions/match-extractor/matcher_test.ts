@@ -50,7 +50,8 @@ Deno.test("modo nome aceita a ordem invertida da listagem", () => {
 });
 
 Deno.test("modo nome não junta duas pessoas diferentes", () => {
-  const texto = "Constam JOAO SOUZA, MARIA LIMA, PEDRO OLIVEIRA e outros " +
+  const texto =
+    "Constam JOAO SOUZA, MARIA LIMA, PEDRO OLIVEIRA e outros " +
     "servidores da pasta, conforme a relacao anexa a este ato administrativo";
   assertEquals(achou(texto, "Joao Oliveira", "nome"), 0);
 });

@@ -78,8 +78,13 @@ const ESQUEMA = {
             },
           },
           required: [
-            "match_id", "titulo", "o_que_aconteceu", "quem_e_afetado",
-            "o_que_fazer", "urgencia", "citacao",
+            "match_id",
+            "titulo",
+            "o_que_aconteceu",
+            "quem_e_afetado",
+            "o_que_fazer",
+            "urgencia",
+            "citacao",
           ],
         },
       },
@@ -210,15 +215,13 @@ function montarAto(linha: unknown): Ato | null {
     ai_category: string | null;
     ai_confidence: number | null;
     terms: { label: string } | { label: string }[] | null;
-    publications:
-      | {
-          publication_date: string;
-          title: string | null;
-          url: string | null;
-          raw_text: string | null;
-          sources: { name: string } | { name: string }[] | null;
-        }
-      | null;
+    publications: {
+      publication_date: string;
+      title: string | null;
+      url: string | null;
+      raw_text: string | null;
+      sources: { name: string } | { name: string }[] | null;
+    } | null;
   };
 
   const term = Array.isArray(l.terms) ? l.terms[0] : l.terms;
@@ -249,7 +252,10 @@ function montarAto(linha: unknown): Ato | null {
 
 /** Reencontra o excerto no texto cheio; o excerto veio com espaços colapsados. */
 function posicaoDoExcerto(bruto: string, excerpt: string): number {
-  const miolo = excerpt.replace(/^\.{3}|\.{3}$/g, "").trim().slice(0, 60);
+  const miolo = excerpt
+    .replace(/^\.{3}|\.{3}$/g, "")
+    .trim()
+    .slice(0, 60);
   if (!miolo) return -1;
   const direto = bruto.indexOf(miolo);
   if (direto >= 0) return direto;

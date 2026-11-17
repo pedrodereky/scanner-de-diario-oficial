@@ -62,15 +62,15 @@ a 0,95 e **zero falso positivo**.
 O que estava quebrado e foi reconstruído, tudo versionado em
 `20260728180000_reconstroi_internal_e_modo_nome.sql`:
 
-| Objeto | Situação encontrada |
-|---|---|
-| schema `internal` | não existia |
-| `internal.call_function` | não existia |
-| `internal.adapter_function_name` | não existia, **e nunca esteve em migration** |
-| `internal.log_event` | não existia, **e nunca esteve em migration** |
-| gatilho `on_auth_user_created` | não existia, então signup não criava perfil nem papel |
-| cron jobs | zero |
-| `sources` / `integration_configs` | vazias |
+| Objeto                            | Situação encontrada                                   |
+| --------------------------------- | ----------------------------------------------------- |
+| schema `internal`                 | não existia                                           |
+| `internal.call_function`          | não existia                                           |
+| `internal.adapter_function_name`  | não existia, **e nunca esteve em migration**          |
+| `internal.log_event`              | não existia, **e nunca esteve em migration**          |
+| gatilho `on_auth_user_created`    | não existia, então signup não criava perfil nem papel |
+| cron jobs                         | zero                                                  |
+| `sources` / `integration_configs` | vazias                                                |
 
 Falta uma credencial para o DOU: o INLabs exige cadastro em
 <https://inlabs.in.gov.br/>. Enquanto ela não entra, a fonte `dou` fica
@@ -83,18 +83,18 @@ O código está completo. **O banco estava pela metade, o pipeline não rodava.*
 
 Verificado por SQL direto:
 
-| Checagem                          | Esperado           | Real          |
-| --------------------------------- | ------------------ | ------------- |
-| Schema `internal`                 | existe             | **não existe** |
-| `internal.runtime_config`         | 1 linha            | **não existe** |
-| `internal.call_function`          | existe             | **não existe** |
-| Jobs em `cron.job`                | 4                  | **0**          |
-| `sources`                         | 48 seedadas        | **0**          |
-| `integration_configs`             | 5 providers seed   | **0**          |
-| `auth.users`                      | ≥1 (admin)         | **0**          |
-| Tabelas/funções/triggers `public` | completos          | ✅ completos   |
-| Partições de `publications`       | 2025-01 … 2028-12  | ✅ presentes   |
-| Edge functions deployadas         | 18                 | ✅ 18 ACTIVE   |
+| Checagem                          | Esperado          | Real           |
+| --------------------------------- | ----------------- | -------------- |
+| Schema `internal`                 | existe            | **não existe** |
+| `internal.runtime_config`         | 1 linha           | **não existe** |
+| `internal.call_function`          | existe            | **não existe** |
+| Jobs em `cron.job`                | 4                 | **0**          |
+| `sources`                         | 48 seedadas       | **0**          |
+| `integration_configs`             | 5 providers seed  | **0**          |
+| `auth.users`                      | ≥1 (admin)        | **0**          |
+| Tabelas/funções/triggers `public` | completos         | ✅ completos   |
+| Partições de `publications`       | 2025-01 … 2028-12 | ✅ presentes   |
+| Edge functions deployadas         | 18                | ✅ 18 ACTIVE   |
 
 Consequência prática: `public.fire_adapter_for_scrape_run`, `admin_run_orchestrator` e `get_runtime_status` chamam `internal.*`, que não existe. Qualquer insert em `scrape_runs` com `status='pending'` estoura no trigger. O produto não coleta nada.
 
@@ -114,14 +114,14 @@ Não era só a coleta parada. A busca em si errava nos dois sentidos. Ela era
 `texto.toLowerCase().indexOf(padrao.toLowerCase())`, e medida contra texto de
 gazeta isso dá:
 
-| Situação | Termo cadastrado | Antes | Agora |
-|---|---|---|---|
-| Gazeta escreve `JOSÉ ANTÔNIO` | `Jose Antonio` | não achava | acha |
-| Gazeta escreve `JOSE ANTONIO` | `José Antônio` | não achava | acha |
-| Nome quebrado entre colunas | `MARIA DA CONCEICAO` | não achava | acha |
-| Espaço duplo na razão social | `CONSTRUTORA ALFA LTDA` | não achava | acha |
-| `SEMANA`, `análise` | `ANA` | achava | não acha |
-| `PLANALTO` | `PLANO` | achava | não acha |
+| Situação                      | Termo cadastrado        | Antes      | Agora    |
+| ----------------------------- | ----------------------- | ---------- | -------- |
+| Gazeta escreve `JOSÉ ANTÔNIO` | `Jose Antonio`          | não achava | acha     |
+| Gazeta escreve `JOSE ANTONIO` | `José Antônio`          | não achava | acha     |
+| Nome quebrado entre colunas   | `MARIA DA CONCEICAO`    | não achava | acha     |
+| Espaço duplo na razão social  | `CONSTRUTORA ALFA LTDA` | não achava | acha     |
+| `SEMANA`, `análise`           | `ANA`                   | achava     | não acha |
+| `PLANALTO`                    | `PLANO`                 | achava     | não acha |
 
 O resultado combinado explica o sintoma exato: o match legítimo nunca entrava,
 o lixo de substring entrava, a IA classificava o lixo como falso positivo (que
@@ -137,7 +137,7 @@ Três mudanças fecharam isso:
    `da`), nome do meio abreviado e a ordem invertida da listagem
    (`OLIVEIRA, JOÃO CARLOS`). O vão entre primeiro e último nome é contado em
    tokens e não atravessa vírgula, senão `JOÃO SOUZA, MARIA LIMA, PEDRO
-   OLIVEIRA` casaria com "João Oliveira", que é outra pessoa.
+OLIVEIRA` casaria com "João Oliveira", que é outra pessoa.
 3. **A tela parou de esconder o descarte.** O filtro "todos" agora inclui o que
    a IA derrubou, rebaixado no card e com o motivo dela à vista. Esconder o
    descarte é esconder o próprio diagnóstico.
@@ -160,14 +160,14 @@ matéria-prima que ele recebia.
 
 O `ai-dossie` muda a matéria-prima e a forma da saída:
 
-| | ai-briefing | ai-dossie |
-|---|---|---|
-| Lê | `ai_summary` (1 a 2 frases) | janela de 1.500 caracteres do `raw_text` em volta do acerto |
-| Devolve | prosa livre, 4 parágrafos | estrutura tipada por tool schema |
-| Prazo | não extrai | extraído por regra do texto literal |
-| Providência | não diz | campo obrigatório por item |
-| Procedência | nenhuma | citação literal + link para o ato |
-| Persistência | some no refresh | gravado em `briefings`, com histórico |
+|              | ai-briefing                 | ai-dossie                                                   |
+| ------------ | --------------------------- | ----------------------------------------------------------- |
+| Lê           | `ai_summary` (1 a 2 frases) | janela de 1.500 caracteres do `raw_text` em volta do acerto |
+| Devolve      | prosa livre, 4 parágrafos   | estrutura tipada por tool schema                            |
+| Prazo        | não extrai                  | extraído por regra do texto literal                         |
+| Providência  | não diz                     | campo obrigatório por item                                  |
+| Procedência  | nenhuma                     | citação literal + link para o ato                           |
+| Persistência | some no refresh             | gravado em `briefings`, com histórico                       |
 
 ### O prazo não pode sair do modelo
 
@@ -183,7 +183,7 @@ só por extenso, expressão quebrada entre colunas, CNPJ e datas partidas.
 Dois filtros vieram de rodar contra ato real e ver a saída errada:
 
 - **Data de norma citada não é agenda.** `Lei Complementar nº 349, de 4 de março
-  de 2022` colocava 2022 na lista de datas. Data precedida de referência
+de 2022` colocava 2022 na lista de datas. Data precedida de referência
   normativa é descartada.
 - **Data vencida não é agenda.** O que já passou não é compromisso de ninguém.
 

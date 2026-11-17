@@ -33,17 +33,20 @@ A TOTP step do login **não** entra no painel deslizante (é um fluxo de 2ª eta
 ## Mudanças nas rotas
 
 ### `src/routes/login.tsx`
+
 - Manter toda a lógica atual (`onSubmitCredentials`, MFA, `onSubmitTotp`, redirecionamento `/app`, redirect se já logado).
 - Substituir o `<AuthShell>` do estado `step === "credentials"` por `<AuthSlider initialMode="login" onLogin={...} onRegister={handleRegister} loading={loading} forgotPasswordHref="/forgot-password" />`.
 - Step `totp` continua usando `AuthShell` exatamente como hoje.
 - Adicionar `handleRegister` que chama `supabase.auth.signUp` (mesma lógica do `signup.tsx`) e dá `toast.success` + `navigate({ to: "/login" })` (para forçar verificação de email antes do login).
 
 ### `src/routes/signup.tsx`
+
 - Manter rota e SEO (`head`).
 - Renderizar `<AuthSlider initialMode="register" ... />` com as mesmas duas handlers (login e signup), para que quem cair em `/signup` veja o painel já deslizado.
 - Mantém validações Zod existentes (`schema` para signup, `credentialsSchema` para login).
 
 ### `src/routes/forgot-password.tsx` e `src/routes/reset-password.tsx`
+
 - **Sem mudanças.** Continuam usando `AuthShell` como hoje. O link "Forgot Password?" dentro do `AuthSlider` aponta para `/forgot-password`.
 
 ## O que NÃO muda

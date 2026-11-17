@@ -2,13 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { FileSearch, Gavel, Plus, Regex, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   CATEGORY_TAG,
@@ -67,8 +61,17 @@ function TopicsPage() {
   const [filterType, setFilterType] = useState<"all" | "literal" | "regex" | "cnpj">("all");
   const [filterTag, setFilterTag] = useState<string | null>(null);
 
-  const { sources, sourcesById, terms, termsLoading, termStats, allTags, saveTerm, toggleActive, deleteTerm } =
-    useTermRadar("tema");
+  const {
+    sources,
+    sourcesById,
+    terms,
+    termsLoading,
+    termStats,
+    allTags,
+    saveTerm,
+    toggleActive,
+    deleteTerm,
+  } = useTermRadar("tema");
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -272,9 +275,7 @@ function TopicsPage() {
                 d30={stats?.d30 ?? 0}
                 lastMatch={stats?.last ?? null}
                 sources={
-                  t.source_ids
-                    .map((id) => sourcesById.get(id))
-                    .filter(Boolean) as Array<{
+                  t.source_ids.map((id) => sourcesById.get(id)).filter(Boolean) as Array<{
                     code: string;
                     name: string;
                     level: string;

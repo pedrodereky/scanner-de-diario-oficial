@@ -57,7 +57,8 @@ Deno.serve(async (req) => {
     await markRun(supa, source_id, date, "success", null, inserted);
     return jsonResponse({ source_code, mode, inserted });
   } catch (e) {
-    const msg = e instanceof Error ? e.message : ((e as { message?: string })?.message ?? JSON.stringify(e));
+    const msg =
+      e instanceof Error ? e.message : ((e as { message?: string })?.message ?? JSON.stringify(e));
     await markRun(supa, source_id, date, "failed", msg);
     return jsonResponse({ error: msg }, 500);
   }

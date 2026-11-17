@@ -57,7 +57,12 @@ export function avaliarConteudo(markdown: string): Veredito {
   const atos = CABECALHOS.reduce((soma, re) => soma + (md.match(re)?.length ?? 0), 0);
 
   if (caracteres === 0) {
-    return { ok: false, motivo: "Nada voltou. A URL não entrega conteúdo legível.", caracteres, atos };
+    return {
+      ok: false,
+      motivo: "Nada voltou. A URL não entrega conteúdo legível.",
+      caracteres,
+      atos,
+    };
   }
 
   const doPortal = SINAIS_DE_PORTAL.find((re) => re.test(md));

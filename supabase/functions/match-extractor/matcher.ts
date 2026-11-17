@@ -245,8 +245,11 @@ function findCnpj(norm: Normalized, original: string, pattern: string): Hit[] {
   if (digits.length !== 14) return [];
 
   const grupos = [
-    digits.slice(0, 2), digits.slice(2, 5), digits.slice(5, 8),
-    digits.slice(8, 12), digits.slice(12, 14),
+    digits.slice(0, 2),
+    digits.slice(2, 5),
+    digits.slice(5, 8),
+    digits.slice(8, 12),
+    digits.slice(12, 14),
   ];
   // Até dois separadores entre grupos: a gazeta quebra "678/\n0001", e a
   // normalização deixa isso como "678/ 0001", ou seja, barra mais espaço.

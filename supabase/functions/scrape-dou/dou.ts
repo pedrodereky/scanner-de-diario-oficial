@@ -61,7 +61,9 @@ function desescapar(valor: string): string {
 }
 
 function semTags(html: string): string {
-  return desescapar(html.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+  return desescapar(html.replace(/<[^>]+>/g, " "))
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 /**

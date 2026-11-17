@@ -210,9 +210,7 @@ function NotificationsPage() {
           <CardTitle className="text-base">Histórico recente</CardTitle>
         </CardHeader>
         <CardContent>
-          {history.isLoading && (
-            <p className="text-sm text-muted-foreground">Carregando...</p>
-          )}
+          {history.isLoading && <p className="text-sm text-muted-foreground">Carregando...</p>}
           {!history.isLoading && (history.data ?? []).length === 0 && (
             <p className="text-sm text-muted-foreground">
               Nenhuma notificação enviada ainda. Configure um canal acima e aguarde o próximo match.
@@ -266,7 +264,9 @@ function NotifHistoryRow({ n }: { n: NotifRow }) {
           )}
         </div>
         {n.matches.ai_summary && (
-          <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">{n.matches.ai_summary}</p>
+          <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">
+            {n.matches.ai_summary}
+          </p>
         )}
         {n.status === "dlq" && n.error && (
           <p className="mt-1 text-xs text-destructive">{n.error}</p>
@@ -285,8 +285,14 @@ function NotifHistoryRow({ n }: { n: NotifRow }) {
         )}
         <span className="text-[10px] text-muted-foreground">
           {n.sent_at
-            ? new Date(n.sent_at).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })
-            : new Date(n.created_at).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
+            ? new Date(n.sent_at).toLocaleString("pt-BR", {
+                dateStyle: "short",
+                timeStyle: "short",
+              })
+            : new Date(n.created_at).toLocaleString("pt-BR", {
+                dateStyle: "short",
+                timeStyle: "short",
+              })}
         </span>
       </div>
     </div>

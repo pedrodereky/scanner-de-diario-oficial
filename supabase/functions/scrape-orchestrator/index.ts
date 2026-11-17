@@ -19,9 +19,10 @@ Deno.serve(async (req) => {
     const force = body?.force === true;
 
     const supa = adminClient();
-    const date: string = typeof body?.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(body.date)
-      ? body.date
-      : new Date().toISOString().slice(0, 10);
+    const date: string =
+      typeof body?.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(body.date)
+        ? body.date
+        : new Date().toISOString().slice(0, 10);
 
     const { data: sources, error } = await supa
       .from("sources")

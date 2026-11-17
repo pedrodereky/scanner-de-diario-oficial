@@ -56,7 +56,10 @@ Deno.test("texto sem prazo devolve lista vazia, não inventa", () => {
 
 Deno.test("datas em algarismo e por extenso", () => {
   const { datas } = extrairPrazos("Sessão em 05/08/2026, com entrega até 12 de setembro de 2026.");
-  assertEquals(datas.map((d) => d.data), ["2026-08-05", "2026-09-12"]);
+  assertEquals(
+    datas.map((d) => d.data),
+    ["2026-08-05", "2026-09-12"],
+  );
 });
 
 Deno.test("data inválida é descartada", () => {
@@ -86,16 +89,25 @@ Deno.test("data de compromisso continua passando mesmo com norma no mesmo texto"
   const { datas } = extrairPrazos(
     "Nos termos do Decreto nº 39.094, de 2014, a sessão será realizada em 12/09/2026.",
   );
-  assertEquals(datas.map((d) => d.data), ["2026-09-12"]);
+  assertEquals(
+    datas.map((d) => d.data),
+    ["2026-09-12"],
+  );
 });
 
 Deno.test("data já vencida some quando o hoje é informado", () => {
   const texto = "Sessão em 01/02/2026 e entrega até 20/12/2026.";
   assertEquals(extrairPrazos(texto).datas.length, 2);
-  assertEquals(extrairPrazos(texto, "2026-07-28").datas.map((d) => d.data), ["2026-12-20"]);
+  assertEquals(
+    extrairPrazos(texto, "2026-07-28").datas.map((d) => d.data),
+    ["2026-12-20"],
+  );
 });
 
 Deno.test("datas saem em ordem cronológica", () => {
   const { datas } = extrairPrazos("prazos em 30/11/2026, 05/08/2026 e 12/09/2026.");
-  assertEquals(datas.map((d) => d.data), ["2026-08-05", "2026-09-12", "2026-11-30"]);
+  assertEquals(
+    datas.map((d) => d.data),
+    ["2026-08-05", "2026-09-12", "2026-11-30"],
+  );
 });
