@@ -6,7 +6,9 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi"] },
+  // src/integrations/supabase é gerado pelo Lovable ("Do not edit it directly"):
+  // corrigir o lint ali seria desfeito na próxima geração.
+  { ignores: ["dist", ".output", ".vinxi", "src/integrations/supabase"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
