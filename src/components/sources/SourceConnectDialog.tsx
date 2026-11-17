@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  CheckCircle2,
-  ExternalLink,
-  Loader2,
-  Power,
-  RefreshCw,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle2, ExternalLink, Loader2, Power, RefreshCw, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -52,7 +45,9 @@ type TestResult = {
 };
 
 const TIPS_BY_STATE: Record<string, string[]> = {
-  SP: ["No DOE-SP, clique em 'Pesquisa de Publicações' e depois 'Última edição publicada' — copie aquele URL"],
+  SP: [
+    "No DOE-SP, clique em 'Pesquisa de Publicações' e depois 'Última edição publicada' — copie aquele URL",
+  ],
   RJ: ["O IOERJ tem 'Diário Oficial' no menu superior — abrir a edição mais recente"],
   MG: ["O Jornal Minas Gerais expõe a edição do dia direto na home — pode tentar com a home mesmo"],
   RS: ["O diário oficial RS abre a edição em PDF. Use o link 'Última edição' ou 'Edição completa'"],
@@ -147,7 +142,9 @@ export function SourceConnectDialog({
           <DialogTitle className="flex items-center gap-2">
             {source.name}
             {source.uf && <Badge variant="outline">{source.uf}</Badge>}
-            <Badge variant="outline" className="font-mono text-[10px]">{source.code}</Badge>
+            <Badge variant="outline" className="font-mono text-[10px]">
+              {source.code}
+            </Badge>
           </DialogTitle>
           <DialogDescription>
             {source.enabled
@@ -185,8 +182,8 @@ export function SourceConnectDialog({
             <li className="flex items-start gap-2">
               <Step n={3} />
               <span>
-                Copie esse URL específico e cole abaixo. Use modo <strong>scrape</strong> pra
-                página única ou <strong>crawl</strong> pra coletar várias.
+                Copie esse URL específico e cole abaixo. Use modo <strong>scrape</strong> pra página
+                única ou <strong>crawl</strong> pra coletar várias.
               </span>
             </li>
             <li className="flex items-start gap-2">
@@ -197,7 +194,10 @@ export function SourceConnectDialog({
               </span>
             </li>
             {tips?.map((t, i) => (
-              <li key={i} className="ml-7 flex items-start gap-2 text-[11px] italic text-muted-foreground">
+              <li
+                key={i}
+                className="ml-7 flex items-start gap-2 text-[11px] italic text-muted-foreground"
+              >
                 💡 {t}
               </li>
             ))}
@@ -215,7 +215,10 @@ export function SourceConnectDialog({
           </div>
           <div>
             <Label className="text-xs">Modo de coleta</Label>
-            <Select value={mode} onValueChange={(v) => setMode(v as "scrape" | "crawl" | "extract")}>
+            <Select
+              value={mode}
+              onValueChange={(v) => setMode(v as "scrape" | "crawl" | "extract")}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>

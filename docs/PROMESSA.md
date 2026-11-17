@@ -11,15 +11,15 @@ medida, e não estimada. Cada linha abaixo tem uma consulta que a prova.
 
 ## Placar em 28/07/2026
 
-| Promessa | Antes | Depois |
-|---|---|---|
-| Monitora o **DOU** | não coletava nada: adapter `inlabs` exigia cadastro que ninguém fez | **80 publicações**, texto integral, sem credencial, em dia |
-| Monitora **Diários Municipais** | 19 habilitados, 7 entregando | **7 habilitados, 7 entregando** |
-| Monitora **Diários Estaduais** | 27 cadastrados, 27 desligados, URL apontando para a home | segue desligado, e agora aparece como desligado na tela |
-| Remove a busca manual | busca literal quebrada por acento e por flexão | acento, fronteira de palavra, nome de pessoa, prefixo, CNPJ |
-| Entrega **inteligência** | resumo de resumos | dossiê com prazo extraído do texto literal |
-| Entrega **alertas** | nenhum alerta saía | dossiê diário por e-mail, 8h em dias úteis |
-| Para **3 personas** | termo genérico | perfis com o que cada uma cadastra, no formato certo |
+| Promessa                        | Antes                                                               | Depois                                                      |
+| ------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Monitora o **DOU**              | não coletava nada: adapter `inlabs` exigia cadastro que ninguém fez | **80 publicações**, texto integral, sem credencial, em dia  |
+| Monitora **Diários Municipais** | 19 habilitados, 7 entregando                                        | **7 habilitados, 7 entregando**                             |
+| Monitora **Diários Estaduais**  | 27 cadastrados, 27 desligados, URL apontando para a home            | segue desligado, e agora aparece como desligado na tela     |
+| Remove a busca manual           | busca literal quebrada por acento e por flexão                      | acento, fronteira de palavra, nome de pessoa, prefixo, CNPJ |
+| Entrega **inteligência**        | resumo de resumos                                                   | dossiê com prazo extraído do texto literal                  |
+| Entrega **alertas**             | nenhum alerta saía                                                  | dossiê diário por e-mail, 8h em dias úteis                  |
+| Para **3 personas**             | termo genérico                                                      | perfis com o que cada uma cadastra, no formato certo        |
 
 ## Como conferir cada linha
 
@@ -53,6 +53,7 @@ Honestidade aqui vale mais que marketing, porque o cliente descobre sozinho.
   O motivo de cada um está gravado na fonte e aparece em `/app/sources`. Ligar
   qualquer um deles hoje faria o radar casar termo em manchete de governo.
   Cada estado precisa da URL da edição, e o teste em Fontes diz se a URL serve.
+
 - **São Paulo.** A maior praça de licitação do país não tem cobertura utilizável
   no Querido Diário (20 edições no acervo inteiro). Precisa de adapter próprio
   da Imprensa Oficial.

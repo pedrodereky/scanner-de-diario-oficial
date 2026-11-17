@@ -9,12 +9,7 @@ type AuthSliderProps = {
   loading: boolean;
 };
 
-export function AuthSlider({
-  initialMode,
-  onLogin,
-  onRegister,
-  loading,
-}: AuthSliderProps) {
+export function AuthSlider({ initialMode, onLogin, onRegister, loading }: AuthSliderProps) {
   const [isActive, setIsActive] = useState(initialMode === "register");
 
   // Login state

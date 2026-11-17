@@ -78,7 +78,7 @@ export const PERFIS: PerfilRadar[] = [
     icone: Building2,
     paraQuem: "Quem precisa achar edital antes do concorrente e não perder prazo de impugnação.",
     oQueImporta:
-      "Abertura de edital, homologação, aditivo e o prazo de impugnação. Cadastrar a palavra \"licitação\" sozinha traz o índice do diário, não o edital: use a expressão de abertura ou o objeto que você fornece.",
+      'Abertura de edital, homologação, aditivo e o prazo de impugnação. Cadastrar a palavra "licitação" sozinha traz o índice do diário, não o edital: use a expressão de abertura ou o objeto que você fornece.',
     categorias: ["licitacao", "homologacao"],
     sugestoes: [
       {

@@ -88,7 +88,8 @@ function PipelinePage() {
   const { user, loading } = useAuth();
   const { isAdmin, isLoading: adminLoading } = useIsAdminStatus();
 
-  if (loading || adminLoading) return <p className="text-sm text-muted-foreground p-6">Carregando...</p>;
+  if (loading || adminLoading)
+    return <p className="text-sm text-muted-foreground p-6">Carregando...</p>;
   if (!user) return <Navigate to="/login" />;
   if (!isAdmin) return <Navigate to="/app" />;
 
@@ -106,7 +107,9 @@ function PipelineContent() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("scrape_runs")
-        .select("id, status, pages_processed, started_at, finished_at, error, sources(id, code, name, scraper_adapter)")
+        .select(
+          "id, status, pages_processed, started_at, finished_at, error, sources(id, code, name, scraper_adapter)",
+        )
         .eq("publication_date", date)
         .order("sources(name)");
       if (error) throw error;
@@ -153,7 +156,9 @@ function PipelineContent() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("matches")
-        .select("id, excerpt, ai_summary, ai_category, created_at, terms(label), publications!inner(title, url, sources(name))")
+        .select(
+          "id, excerpt, ai_summary, ai_category, created_at, terms(label), publications!inner(title, url, sources(name))",
+        )
         .eq("publication_date", date)
         .order("created_at", { ascending: false })
         .limit(50);
@@ -317,9 +322,12 @@ function PipelineContent() {
             />
             <KpiCard
               label="Fontes com conteúdo"
-              value={stats.success > 0
-                ? (runs.data ?? []).filter((r) => r.status === "success" && r.pages_processed > 0).length
-                : "—"}
+              value={
+                stats.success > 0
+                  ? (runs.data ?? []).filter((r) => r.status === "success" && r.pages_processed > 0)
+                      .length
+                  : "—"
+              }
               icon={<CheckCircle2 className="h-4 w-4 text-muted-foreground" />}
             />
           </div>
@@ -345,7 +353,8 @@ function PipelineContent() {
             <Card>
               <CardContent className="flex flex-col items-center gap-3 py-8 text-center">
                 <p className="text-sm text-muted-foreground">
-                  Nenhum match para seus termos — use a busca livre para explorar o conteúdo ingerido.
+                  Nenhum match para seus termos — use a busca livre para explorar o conteúdo
+                  ingerido.
                 </p>
                 <Button asChild variant="outline" size="sm" className="gap-2">
                   <Link to="/app/search" search={{ q: "", since: date, until: date }}>
@@ -388,9 +397,7 @@ function RunSourceRow({ run }: { run: RunRow }) {
         {src?.scraper_adapter}
       </Badge>
       {run.status === "success" && (
-        <span className="text-xs text-muted-foreground shrink-0">
-          {run.pages_processed} pág.
-        </span>
+        <span className="text-xs text-muted-foreground shrink-0">{run.pages_processed} pág.</span>
       )}
       {durationMs !== null && (
         <span className="text-[10px] text-muted-foreground shrink-0">
@@ -398,10 +405,7 @@ function RunSourceRow({ run }: { run: RunRow }) {
         </span>
       )}
       {run.status === "failed" && run.error && (
-        <span
-          className="max-w-xs truncate text-[10px] text-destructive shrink-0"
-          title={run.error}
-        >
+        <span className="max-w-xs truncate text-[10px] text-destructive shrink-0" title={run.error}>
           {run.error}
         </span>
       )}
@@ -449,7 +453,15 @@ function MatchResultRow({ m }: { m: MatchResult }) {
   );
 }
 
-function KpiCard({ label, value, icon }: { label: string; value: number | string; icon: React.ReactNode }) {
+function KpiCard({
+  label,
+  value,
+  icon,
+}: {
+  label: string;
+  value: number | string;
+  icon: React.ReactNode;
+}) {
   return (
     <Card>
       <CardContent className="flex items-center justify-between p-5">

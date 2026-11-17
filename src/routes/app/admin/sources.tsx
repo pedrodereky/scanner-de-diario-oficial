@@ -116,7 +116,8 @@ function AdminSourcesPage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
-  if (loading || adminLoading) return <p className="text-sm text-muted-foreground">Carregando...</p>;
+  if (loading || adminLoading)
+    return <p className="text-sm text-muted-foreground">Carregando...</p>;
   if (!user) return <Navigate to="/login" />;
   if (!isAdmin) return <Navigate to="/app" />;
 
@@ -224,7 +225,13 @@ function AdminSourcesPage() {
       />
 
       {testResult && testTarget && (
-        <Dialog open onOpenChange={() => { setTestResult(null); setTestTarget(null); }}>
+        <Dialog
+          open
+          onOpenChange={() => {
+            setTestResult(null);
+            setTestTarget(null);
+          }}
+        >
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
@@ -246,7 +253,9 @@ function AdminSourcesPage() {
                   <span className="font-medium">Modo:</span>
                   <code className="font-mono">{testResult.mode_used}</code>
                   {testResult.content_length !== undefined && (
-                    <span className="ml-auto">{testResult.content_length.toLocaleString()} chars</span>
+                    <span className="ml-auto">
+                      {testResult.content_length.toLocaleString()} chars
+                    </span>
                   )}
                 </div>
               )}
@@ -262,7 +271,9 @@ function AdminSourcesPage() {
               )}
               {testResult.preview && (
                 <div>
-                  <p className="mb-1 text-xs font-medium text-muted-foreground">Prévia do conteúdo</p>
+                  <p className="mb-1 text-xs font-medium text-muted-foreground">
+                    Prévia do conteúdo
+                  </p>
                   <ScrollArea className="h-56 rounded border bg-muted/30 p-3">
                     <pre className="whitespace-pre-wrap font-mono text-[11px] leading-relaxed">
                       {testResult.preview}
@@ -272,7 +283,13 @@ function AdminSourcesPage() {
               )}
             </div>
             <DialogFooter>
-              <Button variant="ghost" onClick={() => { setTestResult(null); setTestTarget(null); }}>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setTestResult(null);
+                  setTestTarget(null);
+                }}
+              >
                 Fechar
               </Button>
             </DialogFooter>
@@ -458,11 +475,20 @@ function CreateSourceDialog({
           </div>
           <div className="col-span-2">
             <Label>Nome</Label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Diário Oficial do Estado do Amazonas" />
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Diário Oficial do Estado do Amazonas"
+            />
           </div>
           <div>
             <Label>UF</Label>
-            <Input value={uf} onChange={(e) => setUf(e.target.value)} placeholder="AM" maxLength={2} />
+            <Input
+              value={uf}
+              onChange={(e) => setUf(e.target.value)}
+              placeholder="AM"
+              maxLength={2}
+            />
           </div>
           <div>
             <Label>Município (se municipal)</Label>
@@ -485,8 +511,7 @@ function CreateSourceDialog({
               className="font-mono text-xs"
             />
             <p className="mt-1 text-xs text-muted-foreground">
-              Firecrawl:{" "}
-              <code>{`{ "url": "..." }`}</code> · Querido Diário:{" "}
+              Firecrawl: <code>{`{ "url": "..." }`}</code> · Querido Diário:{" "}
               <code>{`{ "ibge": "1302603" }`}</code>
             </p>
           </div>
@@ -495,10 +520,7 @@ function CreateSourceDialog({
           <Button variant="ghost" onClick={onClose}>
             Cancelar
           </Button>
-          <Button
-            onClick={() => create.mutate()}
-            disabled={create.isPending || !code || !name}
-          >
+          <Button onClick={() => create.mutate()} disabled={create.isPending || !code || !name}>
             {create.isPending ? "Criando..." : "Criar fonte"}
           </Button>
         </DialogFooter>

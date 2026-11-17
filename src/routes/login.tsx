@@ -73,12 +73,7 @@ function LoginPage() {
   }
 
   return (
-    <AuthSlider
-      initialMode="login"
-      onLogin={handleLogin}
-      onRegister={register}
-      loading={loading}
-    />
+    <AuthSlider initialMode="login" onLogin={handleLogin} onRegister={register} loading={loading} />
   );
 }
 

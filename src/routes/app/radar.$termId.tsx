@@ -128,7 +128,11 @@ function RadarDetailPage() {
       let confSum = 0,
         confCount = 0;
       for (const m of data ?? []) {
-        const row = m as { created_at: string; ai_confidence: number | null; is_false_positive: boolean };
+        const row = m as {
+          created_at: string;
+          ai_confidence: number | null;
+          is_false_positive: boolean;
+        };
         if (row.is_false_positive) {
           fp++;
           continue;
@@ -239,9 +243,10 @@ function RadarDetailPage() {
     tags: string[] | null;
     term_sources: Array<{ source_id: string; sources: { name: string; code: string } | null }>;
   };
-  const sourceList = (term.term_sources ?? [])
-    .map((ts) => ts.sources)
-    .filter(Boolean) as Array<{ name: string; code: string }>;
+  const sourceList = (term.term_sources ?? []).map((ts) => ts.sources).filter(Boolean) as Array<{
+    name: string;
+    code: string;
+  }>;
   const visibleTags = (term.tags ?? []).filter((t) => t !== "_entidade");
 
   return (
@@ -433,9 +438,7 @@ function KPI({
   return (
     <div className="rounded-lg border bg-card p-4">
       <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</p>
-      <p
-        className={`mt-1 text-2xl font-semibold tabular-nums ${highlight ? "text-primary" : ""}`}
-      >
+      <p className={`mt-1 text-2xl font-semibold tabular-nums ${highlight ? "text-primary" : ""}`}>
         {value}
       </p>
     </div>

@@ -72,10 +72,7 @@ function AlertsPage() {
     queryKey: ["alerts-filter-sources", user?.id],
     enabled: !!user?.id,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("sources")
-        .select("id, code, name")
-        .order("name");
+      const { data, error } = await supabase.from("sources").select("id, code, name").order("name");
       if (error) throw error;
       return data ?? [];
     },
@@ -375,12 +372,7 @@ function AlertsPage() {
                 {f}
               </Badge>
             ))}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-6 px-2 text-xs"
-              onClick={clearAll}
-            >
+            <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={clearAll}>
               Limpar filtros
             </Button>
           </>
@@ -433,4 +425,3 @@ function AlertsPage() {
 }
 
 // MatchCard, MatchRow, humanizeDate são re-exportados de @/components/match-card.
-

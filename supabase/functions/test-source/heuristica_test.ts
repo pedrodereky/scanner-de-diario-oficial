@@ -15,19 +15,25 @@ Deno.test("portal de notícias do estado não é edição (caso doe-sp)", () => 
 });
 
 Deno.test("menu do portal não é edição (caso doe-sc)", () => {
-  const v = avaliarConteudo("- [PORTAL DE NOTÍCIAS](https://estado.sc.gov.br/noticias/) ".repeat(60));
+  const v = avaliarConteudo(
+    "- [PORTAL DE NOTÍCIAS](https://estado.sc.gov.br/noticias/) ".repeat(60),
+  );
   assertEquals(v.ok, false);
   assertEquals(v.motivo.includes("portal"), true);
 });
 
 Deno.test("página de download não é edição (caso doe-am)", () => {
-  const v = avaliarConteudo("Diário Oficial Diários Extras CLIQUE AQUI E FAÇA O DOWNLOAD ".repeat(30));
+  const v = avaliarConteudo(
+    "Diário Oficial Diários Extras CLIQUE AQUI E FAÇA O DOWNLOAD ".repeat(30),
+  );
   assertEquals(v.ok, false);
 });
 
 Deno.test("formulário de busca não é edição (caso doe-ms)", () => {
   const v = avaliarConteudo(
-    "Pular para conteúdo principal DIÁRIO OFICIAL Buscar por: Número do diário Data inicial ".repeat(40),
+    "Pular para conteúdo principal DIÁRIO OFICIAL Buscar por: Número do diário Data inicial ".repeat(
+      40,
+    ),
   );
   assertEquals(v.ok, false);
 });

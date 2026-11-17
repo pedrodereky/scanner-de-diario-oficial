@@ -93,7 +93,11 @@ Deno.serve(async (req) => {
       const dados = await r.json();
 
       if (dados?.error) {
-        saida.push({ user_id: perfil.id, status: "erro no dossiê", erro: String(dados.error).slice(0, 120) });
+        saida.push({
+          user_id: perfil.id,
+          status: "erro no dossiê",
+          erro: String(dados.error).slice(0, 120),
+        });
         continue;
       }
 

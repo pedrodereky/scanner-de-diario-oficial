@@ -21,10 +21,7 @@ export function useAuthActions() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const login = async (
-    email: string,
-    password: string,
-  ): Promise<{ mfa?: MfaChallenge }> => {
+  const login = async (email: string, password: string): Promise<{ mfa?: MfaChallenge }> => {
     const parsed = loginSchema.safeParse({ email, password });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
@@ -84,9 +81,7 @@ export function useAuthActions() {
       });
       if (error) {
         toast.error(
-          error.message.includes("already")
-            ? "Já existe uma conta com esse e-mail"
-            : error.message,
+          error.message.includes("already") ? "Já existe uma conta com esse e-mail" : error.message,
         );
         return;
       }

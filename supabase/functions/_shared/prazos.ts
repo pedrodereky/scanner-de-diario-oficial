@@ -37,25 +37,55 @@ export interface Prazos {
 }
 
 const EXTENSO: Record<string, number> = {
-  um: 1, uma: 1, dois: 2, duas: 2, tres: 3, quatro: 4, cinco: 5, seis: 6,
-  sete: 7, oito: 8, nove: 9, dez: 10, onze: 11, doze: 12, treze: 13,
-  quatorze: 14, catorze: 14, quinze: 15, dezesseis: 16, dezessete: 17,
-  dezoito: 18, dezenove: 19, vinte: 20, trinta: 30, quarenta: 40,
-  cinquenta: 50, sessenta: 60, noventa: 90, cento: 100,
+  um: 1,
+  uma: 1,
+  dois: 2,
+  duas: 2,
+  tres: 3,
+  quatro: 4,
+  cinco: 5,
+  seis: 6,
+  sete: 7,
+  oito: 8,
+  nove: 9,
+  dez: 10,
+  onze: 11,
+  doze: 12,
+  treze: 13,
+  quatorze: 14,
+  catorze: 14,
+  quinze: 15,
+  dezesseis: 16,
+  dezessete: 17,
+  dezoito: 18,
+  dezenove: 19,
+  vinte: 20,
+  trinta: 30,
+  quarenta: 40,
+  cinquenta: 50,
+  sessenta: 60,
+  noventa: 90,
+  cento: 100,
 };
 
 const MESES: Record<string, number> = {
-  janeiro: 1, fevereiro: 2, marco: 3, abril: 4, maio: 5, junho: 6,
-  julho: 7, agosto: 8, setembro: 9, outubro: 10, novembro: 11, dezembro: 12,
+  janeiro: 1,
+  fevereiro: 2,
+  marco: 3,
+  abril: 4,
+  maio: 5,
+  junho: 6,
+  julho: 7,
+  agosto: 8,
+  setembro: 9,
+  outubro: 10,
+  novembro: 11,
+  dezembro: 12,
 };
 
 /** Sem acento, minúsculo, espaço colapsado. O ato quebra linha em qualquer lugar. */
 function achatar(texto: string): string {
-  return texto
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/\s+/g, " ");
+  return texto.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ");
 }
 
 function normalizarUnidade(bruta: string): Unidade | null {
@@ -76,7 +106,7 @@ function normalizarUnidade(bruta: string): Unidade | null {
 const RE_PRAZO = new RegExp(
   [
     "(?:prazo\\s+(?:de|maximo\\s+de|improrrogavel\\s+de)\\s+|dentro\\s+de\\s+|em\\s+ate\\s+|no\\s+prazo\\s+de\\s+|ate\\s+)?",
-    "(\\d{1,4}|[a-z]+)",            // 1: quantidade em algarismo ou extenso
+    "(\\d{1,4}|[a-z]+)", // 1: quantidade em algarismo ou extenso
     "\\s*(?:\\(\\s*([a-z\\s]+?)\\s*\\))?", // 2: extenso entre parênteses
     "\\s*(dias?|meses|mes|anos?|horas?)\\b", // 3: unidade
     "(\\s*(?:uteis|corridos|consecutivos))?", // 4: contagem
@@ -92,19 +122,33 @@ const RE_DATA_EXT = /\b(\d{1,2})\s+de\s+([a-z]+)\s+de\s+(\d{4})\b/g;
 // data que o leitor precisa cumprir. Sem esse corte o dossiê enche de 1999.
 const RE_NORMA = new RegExp(
   "(lei(\\s+complementar)?|decreto(-lei)?|portaria|resolucao|instrucao\\s+normativa|" +
-  "medida\\s+provisoria|emenda|ato|oficio|circular|sumula|parecer|acordao|convenio)" +
-  "[^.;]{0,45}$",
+    "medida\\s+provisoria|emenda|ato|oficio|circular|sumula|parecer|acordao|convenio)" +
+    "[^.;]{0,45}$",
 );
 
 // "contados da publicação deste ato" tem como termo inicial a publicação; o
 // "deste ato" é referência ao próprio documento e só polui a frase do dossiê.
 const CORTA_TERMO = new Set([
-  "deste", "desta", "destes", "destas", "neste", "nesta", "nestes", "nestas",
-  "para", "por", "e", "que", "sob", "com",
+  "deste",
+  "desta",
+  "destes",
+  "destas",
+  "neste",
+  "nesta",
+  "nestes",
+  "nestas",
+  "para",
+  "por",
+  "e",
+  "que",
+  "sob",
+  "com",
 ]);
 
 function limparTermo(bruto: string): string | null {
-  const m = bruto.match(/(?:a\s+contar|contados?|contadas?|apos|a\s+partir)\s+d[aeo]s?\s+([a-z\s]{3,40})/);
+  const m = bruto.match(
+    /(?:a\s+contar|contados?|contadas?|apos|a\s+partir)\s+d[aeo]s?\s+([a-z\s]{3,40})/,
+  );
   if (!m) return null;
 
   const palavras: string[] = [];
