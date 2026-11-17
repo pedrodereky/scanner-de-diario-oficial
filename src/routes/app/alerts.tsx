@@ -161,11 +161,12 @@ function AlertsPage() {
   });
 
   // Agrupa por data de publicação
+  const matchData = matches.data;
   const grouped = useMemo(() => {
-    type MatchItem = NonNullable<typeof matches.data>[number];
-    if (!matches.data) return [] as { key: string; label: string; items: MatchItem[] }[];
+    type MatchItem = NonNullable<typeof matchData>[number];
+    if (!matchData) return [] as { key: string; label: string; items: MatchItem[] }[];
     const map = new Map<string, MatchItem[]>();
-    for (const m of matches.data) {
+    for (const m of matchData) {
       const d = m.publications?.publication_date ?? m.created_at.slice(0, 10);
       if (!map.has(d)) map.set(d, []);
       map.get(d)!.push(m);
@@ -177,7 +178,7 @@ function AlertsPage() {
         label: humanizeDate(key),
         items,
       }));
-  }, [matches.data, sort]);
+  }, [matchData, sort]);
 
   const activeFilters = [
     category !== "all" && CATEGORIES.find((c) => c.value === category)?.label,
